@@ -27,6 +27,42 @@ $(document).ready(function() {
 
     let dataTables = {};
 
+    // ==================== MOBILE SIDEBAR TOGGLE ====================
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+    const sidebarClose = document.getElementById('sidebarClose');
+    const mainContent = document.getElementById('mainContent');
+
+    function closeSidebar() {
+        sidebar.classList.remove('open');
+        mobileOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function openSidebar() {
+        sidebar.classList.add('open');
+        mobileOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', openSidebar);
+    }
+    if (sidebarClose) {
+        sidebarClose.addEventListener('click', closeSidebar);
+    }
+    if (mobileOverlay) {
+        mobileOverlay.addEventListener('click', closeSidebar);
+    }
+
+    // Close sidebar saat resize ke desktop
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 992) {
+            closeSidebar();
+        }
+    });
+
     // ==================== HELPER FUNCTIONS ====================
     function updateDate() {
         const now = new Date();
@@ -41,7 +77,6 @@ $(document).ready(function() {
         $("#stat-total-meninggal").text(meninggalData.length);
         $("#stat-total-disabilitas").text(disabilitasData.length);
         
-        // Laporan page
         $("#laporan-total-warga").text(wargaData.length);
         $("#laporan-kk").text(kkData.length);
         $("#laporan-meninggal").text(meninggalData.length);
@@ -56,7 +91,7 @@ $(document).ready(function() {
             const foto = item.foto || "https://randomuser.me/api/portraits/lego/1.jpg";
             html += `<tr>
                 <td>${idx+1}</td>
-                <td><img src="${foto}" width="40" height="40" class="rounded-circle object-fit-cover"></td>
+                <td><img src="${foto}" width="40" height="40" class="rounded-circle object-fit-cover border"></td>
                 <td>${item.nik}</td>
                 <td class="fw-semibold">${item.nama}</td>
                 <td>${item.jk}</td>
@@ -64,14 +99,14 @@ $(document).ready(function() {
                 <td>${item.alamat}</td>
                 <td>${item.status === 'Kawin' ? '<span class="badge-status bg-success bg-opacity-10 text-success">Kawin</span>' : '<span class="badge-status bg-warning bg-opacity-10 text-warning">' + item.status + '</span>'}</td>
                 <td>
-                    <button class="btn btn-sm btn-outline-primary rounded-circle edit-warga" data-id="${item.id}"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-sm btn-outline-primary rounded-circle edit-warga me-1" data-id="${item.id}"><i class="bi bi-pencil"></i></button>
                     <button class="btn btn-sm btn-outline-danger rounded-circle delete-warga" data-id="${item.id}"><i class="bi bi-trash"></i></button>
                 </td>
             </tr>`;
         });
         $("#warga-table-body").html(html);
         if (dataTables.warga) dataTables.warga.destroy();
-        dataTables.warga = $("#table-warga").DataTable({ language: { url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json" }, responsive: true });
+        dataTables.warga = $("#table-warga").DataTable({ language: { url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json" }, responsive: true, scrollX: true });
     }
 
     function renderKKTable() {
@@ -86,14 +121,14 @@ $(document).ready(function() {
                 <td>${item.rt}/${item.rw}</td>
                 <td><span class="badge bg-primary bg-opacity-10 text-primary">${anggota} org</span></td>
                 <td>
-                    <button class="btn btn-sm btn-outline-primary rounded-circle edit-kk" data-id="${item.id}"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-sm btn-outline-primary rounded-circle edit-kk me-1" data-id="${item.id}"><i class="bi bi-pencil"></i></button>
                     <button class="btn btn-sm btn-outline-danger rounded-circle delete-kk" data-id="${item.id}"><i class="bi bi-trash"></i></button>
                 </td>
             </tr>`;
         });
         $("#kk-table-body").html(html);
         if (dataTables.kk) dataTables.kk.destroy();
-        dataTables.kk = $("#table-kk").DataTable({ language: { url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json" }, responsive: true });
+        dataTables.kk = $("#table-kk").DataTable({ language: { url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json" }, responsive: true, scrollX: true });
     }
 
     function renderMeninggalTable() {
@@ -113,7 +148,7 @@ $(document).ready(function() {
         });
         $("#meninggal-table-body").html(html);
         if (dataTables.meninggal) dataTables.meninggal.destroy();
-        dataTables.meninggal = $("#table-meninggal").DataTable({ language: { url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json" }, responsive: true });
+        dataTables.meninggal = $("#table-meninggal").DataTable({ language: { url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json" }, responsive: true, scrollX: true });
     }
 
     function renderDisabilitasTable() {
@@ -127,14 +162,14 @@ $(document).ready(function() {
                 <td>${item.tingkat}</td>
                 <td>${item.pendamping || '-'}</td>
                 <td>
-                    <button class="btn btn-sm btn-outline-primary rounded-circle edit-disabilitas" data-id="${item.id}"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-sm btn-outline-primary rounded-circle edit-disabilitas me-1" data-id="${item.id}"><i class="bi bi-pencil"></i></button>
                     <button class="btn btn-sm btn-outline-danger rounded-circle delete-disabilitas" data-id="${item.id}"><i class="bi bi-trash"></i></button>
                 </td>
             </tr>`;
         });
         $("#disabilitas-table-body").html(html);
         if (dataTables.disabilitas) dataTables.disabilitas.destroy();
-        dataTables.disabilitas = $("#table-disabilitas").DataTable({ language: { url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json" }, responsive: true });
+        dataTables.disabilitas = $("#table-disabilitas").DataTable({ language: { url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json" }, responsive: true, scrollX: true });
     }
 
     function refreshAllTables() {
@@ -159,6 +194,17 @@ $(document).ready(function() {
         let kepalaOptions = '<option value="">Pilih Kepala Keluarga</option>';
         wargaData.forEach(w => { kepalaOptions += `<option value="${w.nama}" data-alamat="${w.alamat}" data-rt="${w.rt}" data-rw="${w.rw}">${w.nik} - ${w.nama}</option>`; });
         $("#kk-kepala").html(kepalaOptions);
+        
+        // Auto-fill alamat KK saat pilih kepala keluarga
+        $("#kk-kepala").off('change').on('change', function() {
+            let selected = $(this).find('option:selected');
+            let alamat = selected.data('alamat');
+            let rt = selected.data('rt');
+            let rw = selected.data('rw');
+            if (alamat) $("#kk-alamat").val(alamat);
+            if (rt) $("#kk-rt").val(rt);
+            if (rw) $("#kk-rw").val(rw);
+        });
     }
 
     // ==================== CHARTS ====================
@@ -167,23 +213,29 @@ $(document).ready(function() {
         const laki = wargaData.filter(w => w.jk === "Laki-laki").length;
         const perempuan = wargaData.filter(w => w.jk === "Perempuan").length;
         
-        if (genderChart) genderChart.destroy();
-        genderChart = new Chart($("#genderChart"), {
-            type: 'doughnut',
-            data: { labels: ['Laki-laki', 'Perempuan'], datasets: [{ data: [laki, perempuan], backgroundColor: ['#4f46e5', '#ec489a'] }] },
-            options: { responsive: true, maintainAspectRatio: true }
-        });
+        const genderCtx = document.getElementById('genderChart')?.getContext('2d');
+        if (genderCtx) {
+            if (genderChart) genderChart.destroy();
+            genderChart = new Chart(genderCtx, {
+                type: 'doughnut',
+                data: { labels: ['Laki-laki', 'Perempuan'], datasets: [{ data: [laki, perempuan], backgroundColor: ['#4f46e5', '#ec489a'], borderWidth: 0 }] },
+                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } }
+            });
+        }
         
         let anak = wargaData.filter(w => new Date().getFullYear() - new Date(w.tgl).getFullYear() < 15).length;
         let dewasa = wargaData.filter(w => { let u = new Date().getFullYear() - new Date(w.tgl).getFullYear(); return u >= 15 && u < 65; }).length;
         let lansia = wargaData.filter(w => new Date().getFullYear() - new Date(w.tgl).getFullYear() >= 65).length;
         
-        if (ageChart) ageChart.destroy();
-        ageChart = new Chart($("#ageChart"), {
-            type: 'bar',
-            data: { labels: ['0-14 Thn', '15-64 Thn', '65+ Thn'], datasets: [{ data: [anak, dewasa, lansia], backgroundColor: '#4f46e5', borderRadius: 8 }] },
-            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
-        });
+        const ageCtx = document.getElementById('ageChart')?.getContext('2d');
+        if (ageCtx) {
+            if (ageChart) ageChart.destroy();
+            ageChart = new Chart(ageCtx, {
+                type: 'bar',
+                data: { labels: ['0-14 Thn', '15-64 Thn', '65+ Thn'], datasets: [{ data: [anak, dewasa, lansia], backgroundColor: '#4f46e5', borderRadius: 8 }] },
+                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
+            });
+        }
     }
 
     // ==================== NAVIGATION ====================
@@ -198,6 +250,11 @@ $(document).ready(function() {
         
         if (pageId === "dashboard") updateCharts();
         if (pageId === "laporan") updateStats();
+        
+        // Tutup sidebar di mobile setelah klik
+        if (window.innerWidth <= 992) {
+            closeSidebar();
+        }
     }
 
     $(".sidebar .nav-link").click(function(e) {
@@ -227,6 +284,11 @@ $(document).ready(function() {
         
         if (!newData.nik || !newData.nama || !newData.jk || !newData.tempat || !newData.tgl || !newData.alamat || !newData.nokk) {
             Swal.fire('Error', 'Harap lengkapi data yang bertanda *', 'error');
+            return;
+        }
+        
+        if (newData.nik.length !== 16) {
+            Swal.fire('Error', 'NIK harus 16 digit angka', 'error');
             return;
         }
         
@@ -281,7 +343,6 @@ $(document).ready(function() {
     $("#saveKK").click(function() {
         let kepalaNama = $("#kk-kepala").val();
         let kepalaData = wargaData.find(w => w.nama === kepalaNama);
-        if (!kepalaData) { Swal.fire('Error', 'Pilih kepala keluarga yang valid', 'error'); return; }
         
         let newData = {
             id: $("#kk-id").val() ? parseInt($("#kk-id").val()) : nextIdKK++,
@@ -292,13 +353,20 @@ $(document).ready(function() {
             rw: $("#kk-rw").val()
         };
         
-        if (!newData.nomor || !newData.kepala || !newData.alamat) { Swal.fire('Error', 'Lengkapi data', 'error'); return; }
+        if (!newData.nomor || !newData.kepala || !newData.alamat) { Swal.fire('Error', 'Lengkapi data yang bertanda *', 'error'); return; }
+        
+        if (newData.nomor.length !== 16) {
+            Swal.fire('Error', 'No KK harus 16 digit', 'error');
+            return;
+        }
         
         if ($("#kk-id").val()) {
             let index = kkData.findIndex(k => k.id == newData.id);
             if (index !== -1) kkData[index] = newData;
+            Swal.fire('Berhasil', 'Data KK diperbarui', 'success');
         } else {
             kkData.push(newData);
+            Swal.fire('Berhasil', 'KK baru ditambahkan', 'success');
         }
         
         $("#modalKK").modal("hide");
@@ -323,7 +391,12 @@ $(document).ready(function() {
 
     $(document).on("click", ".delete-kk", function() {
         let id = $(this).data("id");
-        Swal.fire({ title: 'Hapus KK?', text: "Anggota KK akan kehilangan KK", icon: 'warning', showCancelButton: true }).then((result) => {
+        let hasMembers = wargaData.some(w => w.nokk === kkData.find(k => k.id == id)?.nomor);
+        if (hasMembers) {
+            Swal.fire('Tidak bisa hapus', 'KK ini masih memiliki anggota. Pindahkan anggota terlebih dahulu.', 'warning');
+            return;
+        }
+        Swal.fire({ title: 'Hapus KK?', icon: 'warning', showCancelButton: true }).then((result) => {
             if (result.isConfirmed) { kkData = kkData.filter(k => k.id != id); refreshAllTables(); Swal.fire('Terhapus!', '', 'success'); }
         });
     });
@@ -344,6 +417,11 @@ $(document).ready(function() {
             sebab: $("#meninggal-sebab").val()
         };
         
+        if (!newData.tglMeninggal) {
+            Swal.fire('Error', 'Tanggal meninggal wajib diisi', 'error');
+            return;
+        }
+        
         meninggalData.push(newData);
         wargaData = wargaData.filter(w => w.id != wargaId);
         $("#modalMeninggal").modal("hide");
@@ -354,7 +432,7 @@ $(document).ready(function() {
 
     $(document).on("click", ".delete-meninggal", function() {
         let id = $(this).data("id");
-        Swal.fire({ title: 'Hapus Data?', icon: 'warning', showCancelButton: true }).then((result) => {
+        Swal.fire({ title: 'Hapus Data Meninggal?', icon: 'warning', showCancelButton: true }).then((result) => {
             if (result.isConfirmed) { meninggalData = meninggalData.filter(m => m.id != id); refreshAllTables(); Swal.fire('Terhapus!', '', 'success'); }
         });
     });
@@ -375,18 +453,24 @@ $(document).ready(function() {
             pendamping: $("#disabilitas-pendamping").val()
         };
         
+        if (!newData.jenis) {
+            Swal.fire('Error', 'Jenis disabilitas wajib diisi', 'error');
+            return;
+        }
+        
         if ($("#disabilitas-id").val()) {
             let index = disabilitasData.findIndex(d => d.id == newData.id);
             if (index !== -1) disabilitasData[index] = newData;
+            Swal.fire('Berhasil', 'Data disabilitas diperbarui', 'success');
         } else {
             disabilitasData.push(newData);
+            Swal.fire('Berhasil', 'Data disabilitas tersimpan', 'success');
         }
         
         $("#modalDisabilitas").modal("hide");
         refreshAllTables();
         $("#formDisabilitas")[0].reset();
         $("#disabilitas-id").val("");
-        Swal.fire('Berhasil', 'Data disabilitas tersimpan', 'success');
     });
 
     $(document).on("click", ".edit-disabilitas", function() {
@@ -404,7 +488,7 @@ $(document).ready(function() {
 
     $(document).on("click", ".delete-disabilitas", function() {
         let id = $(this).data("id");
-        Swal.fire({ title: 'Hapus Data?', icon: 'warning', showCancelButton: true }).then((result) => {
+        Swal.fire({ title: 'Hapus Data Disabilitas?', icon: 'warning', showCancelButton: true }).then((result) => {
             if (result.isConfirmed) { disabilitasData = disabilitasData.filter(d => d.id != id); refreshAllTables(); Swal.fire('Terhapus!', '', 'success'); }
         });
     });
@@ -416,8 +500,20 @@ $(document).ready(function() {
         printWindow.document.write(`
             <html><head><title>Laporan Kependudukan Desa Kalitengah</title>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-            </head><body><div class="container mt-4">${printContent}</div>
-            <script>window.onload = function() { window.print(); setTimeout(function() { window.close(); }, 1000); }<\/script>
+            <style>
+                body { padding: 20px; font-family: 'Inter', sans-serif; }
+                @media print {
+                    body { margin: 0; padding: 15px; }
+                    .btn { display: none; }
+                }
+            </style>
+            </head><body><div class="container">${printContent}</div>
+            <script>
+                window.onload = function() { 
+                    window.print(); 
+                    setTimeout(function() { window.close(); }, 1000); 
+                }
+            <\/script>
             </body></html>
         `);
         printWindow.document.close();

@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Sistem Informasi Data Kependudukan - Desa Kalitengah</title>
     
     <!-- Bootstrap 5 CSS CDN -->
@@ -19,44 +19,55 @@
 </head>
 <body>
 
+    <!-- Mobile Menu Toggle Button -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <i class="bi bi-list"></i>
+    </button>
+
+    <!-- Overlay for mobile -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
     <!-- Sidebar Navigation -->
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="text-center mb-4">
                 <i class="bi bi-people-fill fs-1 text-primary"></i>
                 <h5 class="mt-2 fw-bold">SIDESA</h5>
                 <small class="text-muted">Desa Kalitengah</small>
             </div>
+            <button class="sidebar-close d-lg-none" id="sidebarClose">
+                <i class="bi bi-x-lg"></i>
+            </button>
         </div>
         <ul class="nav flex-column">
             <li class="nav-item">
                 <a class="nav-link active" href="#" data-page="dashboard">
-                    <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                    <i class="bi bi-speedometer2 me-2"></i> <span>Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#" data-page="warga">
-                    <i class="bi bi-people me-2"></i> Data Warga
+                    <i class="bi bi-people me-2"></i> <span>Data Warga</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#" data-page="kk">
-                    <i class="bi bi-house-door me-2"></i> Kartu Keluarga
+                    <i class="bi bi-house-door me-2"></i> <span>Kartu Keluarga</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#" data-page="meninggal">
-                    <i class="bi bi-person-x me-2"></i> Warga Meninggal
+                    <i class="bi bi-person-x me-2"></i> <span>Warga Meninggal</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#" data-page="disabilitas">
-                    <i class="bi bi-person-wheelchair me-2"></i> Disabilitas
+                    <i class="bi bi-person-wheelchair me-2"></i> <span>Disabilitas</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#" data-page="laporan">
-                    <i class="bi bi-file-text me-2"></i> Laporan
+                    <i class="bi bi-file-text me-2"></i> <span>Laporan</span>
                 </a>
             </li>
         </ul>
@@ -68,21 +79,21 @@
     </div>
 
     <!-- Main Content -->
-    <div class="main-content">
+    <div class="main-content" id="mainContent">
         <!-- Top Navbar -->
         <nav class="top-navbar">
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
                 <div>
                     <h4 class="mb-0 fw-semibold" id="page-title">Dashboard</h4>
                 </div>
-                <div class="d-flex align-items-center gap-3">
+                <div class="d-flex align-items-center gap-2 flex-wrap">
                     <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill">
                         <i class="bi bi-calendar3 me-1"></i> <span id="current-date"></span>
                     </span>
                     <div class="dropdown">
                         <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
-                            <img src="https://randomuser.me/api/portraits/lego/1.jpg" width="40" height="40" class="rounded-circle">
-                            <span class="ms-2 d-none d-sm-block">Admin Desa</span>
+                            <img src="https://randomuser.me/api/portraits/lego/1.jpg" width="40" height="40" class="rounded-circle border">
+                            <span class="ms-2 d-none d-sm-inline">Admin Desa</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i> Profile</a></li>
@@ -95,16 +106,17 @@
             </div>
         </nav>
 
-        <div class="content-wrapper">
+        <div class="content-wrapper" id="contentWrapper">
             <!-- DASHBOARD PAGE -->
             <div id="page-dashboard" class="page-content active">
-                <div class="row g-4 mb-4">
-                    <div class="col-md-3 col-sm-6">
+                <!-- Stats Cards Row -->
+                <div class="row g-3 g-md-4 mb-4">
+                    <div class="col-6 col-md-3">
                         <div class="stat-card">
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span class="text-muted">Total Warga</span>
-                                    <h2 class="mt-2 mb-0 fw-bold" id="stat-total-warga">0</h2>
+                                    <span class="text-muted small">Total Warga</span>
+                                    <h2 class="mt-1 mb-0 fw-bold fs-2 fs-md-1" id="stat-total-warga">0</h2>
                                 </div>
                                 <div class="stat-icon bg-primary bg-opacity-10 text-primary">
                                     <i class="bi bi-people"></i>
@@ -112,12 +124,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6">
+                    <div class="col-6 col-md-3">
                         <div class="stat-card">
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span class="text-muted">Kartu Keluarga</span>
-                                    <h2 class="mt-2 mb-0 fw-bold" id="stat-total-kk">0</h2>
+                                    <span class="text-muted small">Kartu Keluarga</span>
+                                    <h2 class="mt-1 mb-0 fw-bold fs-2 fs-md-1" id="stat-total-kk">0</h2>
                                 </div>
                                 <div class="stat-icon bg-success bg-opacity-10 text-success">
                                     <i class="bi bi-house-door"></i>
@@ -125,12 +137,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6">
+                    <div class="col-6 col-md-3">
                         <div class="stat-card">
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span class="text-muted">Meninggal</span>
-                                    <h2 class="mt-2 mb-0 fw-bold" id="stat-total-meninggal">0</h2>
+                                    <span class="text-muted small">Meninggal</span>
+                                    <h2 class="mt-1 mb-0 fw-bold fs-2 fs-md-1" id="stat-total-meninggal">0</h2>
                                 </div>
                                 <div class="stat-icon bg-danger bg-opacity-10 text-danger">
                                     <i class="bi bi-person-x"></i>
@@ -138,12 +150,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6">
+                    <div class="col-6 col-md-3">
                         <div class="stat-card">
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span class="text-muted">Disabilitas</span>
-                                    <h2 class="mt-2 mb-0 fw-bold" id="stat-total-disabilitas">0</h2>
+                                    <span class="text-muted small">Disabilitas</span>
+                                    <h2 class="mt-1 mb-0 fw-bold fs-2 fs-md-1" id="stat-total-disabilitas">0</h2>
                                 </div>
                                 <div class="stat-icon bg-warning bg-opacity-10 text-warning">
                                     <i class="bi bi-person-wheelchair"></i>
@@ -153,17 +165,22 @@
                     </div>
                 </div>
 
-                <div class="row g-4">
-                    <div class="col-md-6">
+                <!-- Charts Row -->
+                <div class="row g-3 g-md-4">
+                    <div class="col-12 col-lg-6">
                         <div class="card-chart">
                             <h6 class="fw-semibold mb-3"><i class="bi bi-pie-chart me-2"></i>Komposisi Jenis Kelamin</h6>
-                            <canvas id="genderChart" height="200"></canvas>
+                            <div class="chart-container">
+                                <canvas id="genderChart" height="200"></canvas>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-12 col-lg-6">
                         <div class="card-chart">
                             <h6 class="fw-semibold mb-3"><i class="bi bi-bar-chart-steps me-2"></i>Sebaran Umur</h6>
-                            <canvas id="ageChart" height="200"></canvas>
+                            <div class="chart-container">
+                                <canvas id="ageChart" height="200"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -174,17 +191,19 @@
                 <div class="card-table">
                     <div class="card-header-custom">
                         <h5 class="fw-semibold mb-0"><i class="bi bi-people me-2"></i>Data Warga Aktif</h5>
-                        <button class="btn btn-primary btn-sm rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#modalWarga">
+                        <button class="btn btn-primary btn-sm rounded-pill px-3 px-md-4" data-bs-toggle="modal" data-bs-target="#modalWarga">
                             <i class="bi bi-plus-lg me-1"></i> Tambah Warga
                         </button>
                     </div>
-                    <div class="table-responsive">
-                        <table id="table-warga" class="table table-hover align-middle" style="width:100%">
-                            <thead>
-                                <tr><th>No</th><th>Foto</th><th>NIK</th><th>Nama</th><th>JK</th><th>TTL</th><th>Alamat</th><th>Status</th><th>Aksi</th></tr>
-                            </thead>
-                            <tbody id="warga-table-body"></tbody>
-                        </table>
+                    <div class="table-responsive-wrapper">
+                        <div class="table-responsive">
+                            <table id="table-warga" class="table table-hover align-middle" style="width:100%">
+                                <thead>
+                                    <tr><th>No</th><th>Foto</th><th>NIK</th><th>Nama</th><th>JK</th><th>TTL</th><th>Alamat</th><th>Status</th><th>Aksi</th></tr>
+                                </thead>
+                                <tbody id="warga-table-body"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -194,15 +213,17 @@
                 <div class="card-table">
                     <div class="card-header-custom">
                         <h5 class="fw-semibold mb-0"><i class="bi bi-house-door me-2"></i>Data Kartu Keluarga</h5>
-                        <button class="btn btn-primary btn-sm rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#modalKK">
+                        <button class="btn btn-primary btn-sm rounded-pill px-3 px-md-4" data-bs-toggle="modal" data-bs-target="#modalKK">
                             <i class="bi bi-plus-lg me-1"></i> Tambah KK
                         </button>
                     </div>
-                    <div class="table-responsive">
-                        <table id="table-kk" class="table table-hover align-middle" style="width:100%">
-                            <thead><tr><th>No</th><th>No KK</th><th>Kepala Keluarga</th><th>Alamat</th><th>RT/RW</th><th>Jml Anggota</th><th>Aksi</th></tr></thead>
-                            <tbody id="kk-table-body"></tbody>
-                        </table>
+                    <div class="table-responsive-wrapper">
+                        <div class="table-responsive">
+                            <table id="table-kk" class="table table-hover align-middle" style="width:100%">
+                                <thead><tr><th>No</th><th>No KK</th><th>Kepala Keluarga</th><th>Alamat</th><th>RT/RW</th><th>Anggota</th><th>Aksi</th></tr></thead>
+                                <tbody id="kk-table-body"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -211,16 +232,18 @@
             <div id="page-meninggal" class="page-content">
                 <div class="card-table">
                     <div class="card-header-custom">
-                        <h5 class="fw-semibold mb-0"><i class="bi bi-person-x me-2"></i>Data Warga Meninggal Dunia</h5>
-                        <button class="btn btn-primary btn-sm rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#modalMeninggal">
+                        <h5 class="fw-semibold mb-0"><i class="bi bi-person-x me-2"></i>Data Warga Meninggal</h5>
+                        <button class="btn btn-primary btn-sm rounded-pill px-3 px-md-4" data-bs-toggle="modal" data-bs-target="#modalMeninggal">
                             <i class="bi bi-plus-lg me-1"></i> Tambah Data
                         </button>
                     </div>
-                    <div class="table-responsive">
-                        <table id="table-meninggal" class="table table-hover align-middle" style="width:100%">
-                            <thead><tr><th>No</th><th>NIK</th><th>Nama</th><th>Jenis Kelamin</th><th>Tanggal Meninggal</th><th>Sebab</th><th>Aksi</th></tr></thead>
-                            <tbody id="meninggal-table-body"></tbody>
-                        </table>
+                    <div class="table-responsive-wrapper">
+                        <div class="table-responsive">
+                            <table id="table-meninggal" class="table table-hover align-middle" style="width:100%">
+                                <thead><tr><th>No</th><th>NIK</th><th>Nama</th><th>JK</th><th>Tgl Meninggal</th><th>Sebab</th><th>Aksi</th></tr></thead>
+                                <tbody id="meninggal-table-body"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -230,15 +253,17 @@
                 <div class="card-table">
                     <div class="card-header-custom">
                         <h5 class="fw-semibold mb-0"><i class="bi bi-person-wheelchair me-2"></i>Data Warga Disabilitas</h5>
-                        <button class="btn btn-primary btn-sm rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#modalDisabilitas">
+                        <button class="btn btn-primary btn-sm rounded-pill px-3 px-md-4" data-bs-toggle="modal" data-bs-target="#modalDisabilitas">
                             <i class="bi bi-plus-lg me-1"></i> Tambah Data
                         </button>
                     </div>
-                    <div class="table-responsive">
-                        <table id="table-disabilitas" class="table table-hover align-middle" style="width:100%">
-                            <thead><tr><th>No</th><th>NIK</th><th>Nama</th><th>Jenis Disabilitas</th><th>Tingkat</th><th>Pendamping</th><th>Aksi</th></tr></thead>
-                            <tbody id="disabilitas-table-body"></tbody>
-                        </table>
+                    <div class="table-responsive-wrapper">
+                        <div class="table-responsive">
+                            <table id="table-disabilitas" class="table table-hover align-middle" style="width:100%">
+                                <thead><tr><th>No</th><th>NIK</th><th>Nama</th><th>Jenis Disabilitas</th><th>Tingkat</th><th>Pendamping</th><th>Aksi</th></tr></thead>
+                                <tbody id="disabilitas-table-body"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -248,45 +273,49 @@
                 <div class="card-table">
                     <div class="card-header-custom">
                         <h5 class="fw-semibold mb-0"><i class="bi bi-file-text me-2"></i>Laporan & Rekapitulasi</h5>
-                        <button class="btn btn-outline-primary btn-sm rounded-pill px-4" id="btn-print-laporan">
-                            <i class="bi bi-printer me-1"></i> Cetak Laporan
+                        <button class="btn btn-outline-primary btn-sm rounded-pill px-3 px-md-4" id="btn-print-laporan">
+                            <i class="bi bi-printer me-1"></i> Cetak
                         </button>
                     </div>
-                    <div class="p-4" id="laporan-content">
+                    <div class="p-3 p-md-4" id="laporan-content">
                         <div class="text-center mb-4">
                             <i class="bi bi-building fs-1 text-primary"></i>
-                            <h4>PEMERINTAH DESA KALITENGAH</h4>
-                            <p class="text-muted">Kecamatan Kalitengah, Kabupaten...</p>
-                            <h5>LAPORAN DATA KEPENDUDUKAN</h5>
-                            <p>Periode: <span id="laporan-periode"></span></p>
+                            <h4 class="fs-5 fs-md-4">PEMERINTAH DESA KALITENGAH</h4>
+                            <p class="text-muted small">Kecamatan Kalitengah, Kabupaten...</p>
+                            <h5 class="fs-6 fs-md-5">LAPORAN DATA KEPENDUDUKAN</h5>
+                            <p class="small">Periode: <span id="laporan-periode"></span></p>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6">
                                 <div class="mb-4">
-                                    <h6>A. Data Penduduk</h6>
-                                    <table class="table table-sm table-bordered">
-                                        <tr><td>Total Warga</td><td id="laporan-total-warga">-</td></tr>
-                                        <tr><td>Laki-laki</td><td id="laporan-laki">-</td></tr>
-                                        <tr><td>Perempuan</td><td id="laporan-perempuan">-</td></tr>
-                                        <tr><td>Kartu Keluarga</td><td id="laporan-kk">-</td></tr>
-                                    </table>
+                                    <h6 class="fw-semibold small">A. Data Penduduk</h6>
+                                    <div class="table-responsive">
+                                        <table class="table table-sm table-bordered">
+                                            <tr><td>Total Warga</td><td id="laporan-total-warga">-</td></tr>
+                                            <tr><td>Laki-laki</td><td id="laporan-laki">-</td></tr>
+                                            <tr><td>Perempuan</td><td id="laporan-perempuan">-</td></tr>
+                                            <tr><td>Kartu Keluarga</td><td id="laporan-kk">-</td></tr>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-12 col-md-6">
                                 <div class="mb-4">
-                                    <h6>B. Data Khusus</h6>
-                                    <table class="table table-sm table-bordered">
-                                        <tr><td>Warga Meninggal</td><td id="laporan-meninggal">-</td></tr>
-                                        <tr><td>Warga Disabilitas</td><td id="laporan-disabilitas">-</td></tr>
-                                    </table>
+                                    <h6 class="fw-semibold small">B. Data Khusus</h6>
+                                    <div class="table-responsive">
+                                        <table class="table table-sm table-bordered">
+                                            <tr><td>Warga Meninggal</td><td id="laporan-meninggal">-</td></tr>
+                                            <tr><td>Warga Disabilitas</td><td id="laporan-disabilitas">-</td></tr>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="text-end mt-4">
-                            <p>Kalitengah, <span id="tanggal-cetak"></span></p>
-                            <p>Kepala Desa Kalitengah,</p>
+                            <p class="small mb-1">Kalitengah, <span id="tanggal-cetak"></span></p>
+                            <p class="small">Kepala Desa Kalitengah,</p>
                             <br><br>
-                            <p><u>(____________________)</u></p>
+                            <p class="small"><u>(____________________)</u></p>
                         </div>
                     </div>
                 </div>
@@ -294,10 +323,10 @@
         </div>
     </div>
 
-    <!-- MODALS -->
+    <!-- MODALS (Responsive) -->
     <!-- Modal Warga -->
-    <div class="modal fade" id="modalWarga" tabindex="-1">
-        <div class="modal-dialog modal-lg">
+    <div class="modal fade" id="modalWarga" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title"><i class="bi bi-person-plus me-2"></i>Tambah/Edit Warga</h5>
@@ -307,24 +336,24 @@
                     <form id="formWarga">
                         <input type="hidden" id="warga-id">
                         <div class="row g-3">
-                            <div class="col-md-6"><label>NIK *</label><input type="text" class="form-control" id="warga-nik" maxlength="16" required></div>
-                            <div class="col-md-6"><label>Nama Lengkap *</label><input type="text" class="form-control" id="warga-nama" required></div>
-                            <div class="col-md-4"><label>Jenis Kelamin *</label><select class="form-select" id="warga-jk" required><option value="">Pilih</option><option value="Laki-laki">Laki-laki</option><option value="Perempuan">Perempuan</option></select></div>
-                            <div class="col-md-4"><label>Tempat Lahir *</label><input type="text" class="form-control" id="warga-tempat" required></div>
-                            <div class="col-md-4"><label>Tanggal Lahir *</label><input type="date" class="form-control" id="warga-tgl" required></div>
-                            <div class="col-md-6"><label>Alamat *</label><textarea class="form-control" id="warga-alamat" rows="2" required></textarea></div>
-                            <div class="col-md-3"><label>RT</label><input type="text" class="form-control" id="warga-rt" value="001"></div>
-                            <div class="col-md-3"><label>RW</label><input type="text" class="form-control" id="warga-rw" value="001"></div>
-                            <div class="col-md-6"><label>No KK *</label><select class="form-select" id="warga-nokk" required><option value="">Pilih No KK</option></select></div>
-                            <div class="col-md-6"><label>Status Perkawinan</label><select class="form-select" id="warga-status"><option value="Belum Kawin">Belum Kawin</option><option value="Kawin">Kawin</option><option value="Cerai">Cerai</option></select></div>
-                            <div class="col-md-6"><label>Pekerjaan</label><input type="text" class="form-control" id="warga-pekerjaan"></div>
-                            <div class="col-md-6"><label>Foto URL</label><input type="url" class="form-control" id="warga-foto" placeholder="https://randomuser.me/api/portraits/..."></div>
+                            <div class="col-12 col-md-6"><label class="form-label small fw-semibold">NIK *</label><input type="text" class="form-control" id="warga-nik" maxlength="16" placeholder="16 digit NIK" required></div>
+                            <div class="col-12 col-md-6"><label class="form-label small fw-semibold">Nama Lengkap *</label><input type="text" class="form-control" id="warga-nama" required></div>
+                            <div class="col-6 col-md-4"><label class="form-label small fw-semibold">Jenis Kelamin *</label><select class="form-select" id="warga-jk" required><option value="">Pilih</option><option value="Laki-laki">Laki-laki</option><option value="Perempuan">Perempuan</option></select></div>
+                            <div class="col-6 col-md-4"><label class="form-label small fw-semibold">Tempat Lahir *</label><input type="text" class="form-control" id="warga-tempat" required></div>
+                            <div class="col-12 col-md-4"><label class="form-label small fw-semibold">Tanggal Lahir *</label><input type="date" class="form-control" id="warga-tgl" required></div>
+                            <div class="col-12"><label class="form-label small fw-semibold">Alamat *</label><textarea class="form-control" id="warga-alamat" rows="2" required></textarea></div>
+                            <div class="col-6 col-md-3"><label class="form-label small fw-semibold">RT</label><input type="text" class="form-control" id="warga-rt" value="001"></div>
+                            <div class="col-6 col-md-3"><label class="form-label small fw-semibold">RW</label><input type="text" class="form-control" id="warga-rw" value="001"></div>
+                            <div class="col-12 col-md-6"><label class="form-label small fw-semibold">No KK *</label><select class="form-select" id="warga-nokk" required><option value="">Pilih No KK</option></select></div>
+                            <div class="col-12 col-md-6"><label class="form-label small fw-semibold">Status Perkawinan</label><select class="form-select" id="warga-status"><option value="Belum Kawin">Belum Kawin</option><option value="Kawin">Kawin</option><option value="Cerai">Cerai</option></select></div>
+                            <div class="col-12 col-md-6"><label class="form-label small fw-semibold">Pekerjaan</label><input type="text" class="form-control" id="warga-pekerjaan"></div>
+                            <div class="col-12 col-md-6"><label class="form-label small fw-semibold">Foto URL</label><input type="url" class="form-control" id="warga-foto" placeholder="https://randomuser.me/api/portraits/..."></div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-primary" id="saveWarga">Simpan</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="saveWarga">Simpan</button>
                 </div>
             </div>
         </div>
@@ -332,7 +361,7 @@
 
     <!-- Modal KK -->
     <div class="modal fade" id="modalKK" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title"><i class="bi bi-house-add me-2"></i>Tambah KK</h5>
@@ -341,15 +370,15 @@
                 <div class="modal-body">
                     <form id="formKK">
                         <input type="hidden" id="kk-id">
-                        <div class="mb-3"><label>No Kartu Keluarga *</label><input type="text" class="form-control" id="kk-nomor" maxlength="16" required></div>
-                        <div class="mb-3"><label>Kepala Keluarga *</label><select class="form-select" id="kk-kepala" required><option value="">Pilih Kepala Keluarga</option></select></div>
-                        <div class="mb-3"><label>Alamat *</label><textarea class="form-control" id="kk-alamat" rows="2" required></textarea></div>
-                        <div class="row"><div class="col-6"><label>RT</label><input type="text" class="form-control" id="kk-rt" value="001"></div><div class="col-6"><label>RW</label><input type="text" class="form-control" id="kk-rw" value="001"></div></div>
+                        <div class="mb-3"><label class="form-label small fw-semibold">No Kartu Keluarga *</label><input type="text" class="form-control" id="kk-nomor" maxlength="16" placeholder="16 digit KK" required></div>
+                        <div class="mb-3"><label class="form-label small fw-semibold">Kepala Keluarga *</label><select class="form-select" id="kk-kepala" required><option value="">Pilih Kepala Keluarga</option></select></div>
+                        <div class="mb-3"><label class="form-label small fw-semibold">Alamat *</label><textarea class="form-control" id="kk-alamat" rows="2" required></textarea></div>
+                        <div class="row g-2"><div class="col-6"><label class="form-label small fw-semibold">RT</label><input type="text" class="form-control" id="kk-rt" value="001"></div><div class="col-6"><label class="form-label small fw-semibold">RW</label><input type="text" class="form-control" id="kk-rw" value="001"></div></div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-primary" id="saveKK">Simpan</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="saveKK">Simpan</button>
                 </div>
             </div>
         </div>
@@ -357,7 +386,7 @@
 
     <!-- Modal Meninggal -->
     <div class="modal fade" id="modalMeninggal" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title"><i class="bi bi-person-x me-2"></i>Tambah Data Meninggal</h5>
@@ -366,14 +395,14 @@
                 <div class="modal-body">
                     <form id="formMeninggal">
                         <input type="hidden" id="meninggal-id">
-                        <div class="mb-3"><label>Pilih Warga *</label><select class="form-select" id="meninggal-warga" required><option value="">Pilih Warga</option></select></div>
-                        <div class="mb-3"><label>Tanggal Meninggal *</label><input type="date" class="form-control" id="meninggal-tgl" required></div>
-                        <div class="mb-3"><label>Sebab Meninggal</label><textarea class="form-control" id="meninggal-sebab" rows="2"></textarea></div>
+                        <div class="mb-3"><label class="form-label small fw-semibold">Pilih Warga *</label><select class="form-select" id="meninggal-warga" required><option value="">Pilih Warga</option></select></div>
+                        <div class="mb-3"><label class="form-label small fw-semibold">Tanggal Meninggal *</label><input type="date" class="form-control" id="meninggal-tgl" required></div>
+                        <div class="mb-3"><label class="form-label small fw-semibold">Sebab Meninggal</label><textarea class="form-control" id="meninggal-sebab" rows="2" placeholder="Sebab meninggal..."></textarea></div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-primary" id="saveMeninggal">Simpan</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="saveMeninggal">Simpan</button>
                 </div>
             </div>
         </div>
@@ -381,7 +410,7 @@
 
     <!-- Modal Disabilitas -->
     <div class="modal fade" id="modalDisabilitas" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title"><i class="bi bi-person-wheelchair me-2"></i>Tambah Data Disabilitas</h5>
@@ -390,15 +419,15 @@
                 <div class="modal-body">
                     <form id="formDisabilitas">
                         <input type="hidden" id="disabilitas-id">
-                        <div class="mb-3"><label>Pilih Warga *</label><select class="form-select" id="disabilitas-warga" required><option value="">Pilih Warga</option></select></div>
-                        <div class="mb-3"><label>Jenis Disabilitas *</label><select class="form-select" id="disabilitas-jenis" required><option value="">Pilih</option><option value="Fisik">Fisik</option><option value="Netra">Netra</option><option value="Rungu Wicara">Rungu Wicara</option><option value="Mental">Mental</option><option value="Ganda">Ganda</option></select></div>
-                        <div class="mb-3"><label>Tingkat Disabilitas</label><select class="form-select" id="disabilitas-tingkat"><option value="Ringan">Ringan</option><option value="Sedang">Sedang</option><option value="Berat">Berat</option></select></div>
-                        <div class="mb-3"><label>Nama Pendamping</label><input type="text" class="form-control" id="disabilitas-pendamping"></div>
+                        <div class="mb-3"><label class="form-label small fw-semibold">Pilih Warga *</label><select class="form-select" id="disabilitas-warga" required><option value="">Pilih Warga</option></select></div>
+                        <div class="mb-3"><label class="form-label small fw-semibold">Jenis Disabilitas *</label><select class="form-select" id="disabilitas-jenis" required><option value="">Pilih</option><option value="Fisik">Fisik</option><option value="Netra">Netra</option><option value="Rungu Wicara">Rungu Wicara</option><option value="Mental">Mental</option><option value="Ganda">Ganda</option></select></div>
+                        <div class="mb-3"><label class="form-label small fw-semibold">Tingkat Disabilitas</label><select class="form-select" id="disabilitas-tingkat"><option value="Ringan">Ringan</option><option value="Sedang">Sedang</option><option value="Berat">Berat</option></select></div>
+                        <div class="mb-3"><label class="form-label small fw-semibold">Nama Pendamping</label><input type="text" class="form-control" id="disabilitas-pendamping" placeholder="Nama pendamping"></div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-primary" id="saveDisabilitas">Simpan</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="saveDisabilitas">Simpan</button>
                 </div>
             </div>
         </div>
